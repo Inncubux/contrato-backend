@@ -67,6 +67,11 @@ export class UsersService {
     return User.findByPk(id, { attributes: { exclude: ['password'] } });
   }
 
+  /**
+   * Crea un nuevo usuario, asegurándose de que el email no esté ya registrado.
+   * @param createUserDto dto que contiene los datos del nuevo usuario a crear
+   * @returns El usuario creado sin su contraseña o lanza una excepción si el email ya está registrado
+   */
   async create(createUserDto: CreateUserDto) {
     const existingUser = await User.findOne({
       where: { email: createUserDto.email },
